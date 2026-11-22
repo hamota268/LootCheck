@@ -148,9 +148,15 @@ class MainWindow:
         self._main_canvas.bind("<Enter>", lambda e: self._main_canvas.bind_all("<MouseWheel>", self._on_mousewheel))
         self._main_canvas.bind("<Leave>", lambda e: self._main_canvas.unbind_all("<MouseWheel>"))
 
+        # === ONBOARDING BANNER (shown only if no API key is configured) ===
+        self._onboarding_frame = tk.Frame(self._main_content, bg=COLORS["bg_primary"])
+
         # === DROP ZONE ===
         self._drop_zone = DropZone(self._main_content, on_file_selected=self._on_file_selected)
         self._drop_zone.pack(fill="x", pady=(10, 0))
+
+        # Check onboarding banner state
+        self._build_onboarding_banner()
 
         # === FILE INFO CARD (hidden initially) ===
         self._file_info_frame = tk.Frame(self._main_content, bg=COLORS["bg_primary"])
@@ -583,6 +589,77 @@ class MainWindow:
         self._scanning = False
         self._show_scan_button()
 
+    def _build_onboarding_banner(self):
+        """Build the first-time setup banner if no API key is set."""
+        for widget in self._onboarding_frame.winfo_children():
+            widget.destroy()
+
+        if self._credential_storage.has_api_key():
+            self._onboarding_frame.pack_forget()
+            return
+
+        outer, inner = create_card(
+            self._onboarding_frame,
+            bg_color=COLORS["bg_card"],
+            border_color=COLORS["accent_green"],
+            padx=16,
+            pady=12,
+        )
+        outer.pack(fill="x", padx=20, pady=(15, 0))
+
+        top_row = tk.Frame(inner, bg=COLORS["bg_card"])
+        top_row.pack(fill="x")
+
+        tk.Label(
+            top_row,
+            text="⚡ QUICK SETUP (TAKES 30 SECONDS)",
+            font=FONTS["heading_small"],
+            fg=COLORS["accent_green"],
+            bg=COLORS["bg_card"],
+        ).pack(side="left")
+
+        dismiss_btn = tk.Button(
+            top_row,
+            text="✕",
+            font=("Segoe UI", 10),
+            fg=COLORS["text_muted"],
+            bg=COLORS["bg_card"],
+            activebackground=COLORS["bg_card"],
+            activeforeground=COLORS["text_primary"],
+            relief="flat",
+            cursor="hand2",
+            borderwidth=0,
+            command=self._onboarding_frame.pack_forget,
+        )
+        dismiss_btn.pack(side="right")
+
+        tk.Label(
+            inner,
+            text=(
+                "To scan files against 70+ security engines for free, add your free VirusTotal API key. "
+                "Click below to get started in 1 click."
+            ),
+            font=FONTS["body"],
+            fg=COLORS["text_secondary"],
+            bg=COLORS["bg_card"],
+            wraplength=700,
+            justify="left",
+            anchor="w",
+        ).pack(fill="x", pady=(6, 10))
+
+        btn_row = tk.Frame(inner, bg=COLORS["bg_card"])
+        btn_row.pack(fill="x")
+
+        setup_btn = create_button(
+            btn_row,
+            "⚡ Set Up Free API Key",
+            self._open_settings,
+            style="primary",
+        )
+        setup_btn.pack(side="left", padx=(0, 10))
+
+        self._onboarding_frame.pack(fill="x", before=self._drop_zone)
+
     def _open_settings(self):
         """Open the settings window."""
         SettingsWindow(
@@ -597,9 +674,13 @@ class MainWindow:
         if has_key:
             self._api_status_dot.config(fg=COLORS["status_connected"])
             self._api_status_text.config(text="API key ready")
+            if hasattr(self, "_onboarding_frame"):
+                self._onboarding_frame.pack_forget()
         else:
             self._api_status_dot.config(fg=COLORS["status_disconnected"])
             self._api_status_text.config(text="No API key")
+            if hasattr(self, "_onboarding_frame"):
+                self._build_onboarding_banner()
 
         # Refresh scan button if visible
         if self._current_file and not self._scanning:

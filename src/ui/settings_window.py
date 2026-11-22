@@ -3,6 +3,8 @@
 import tkinter as tk
 import threading
 import logging
+import webbrowser
+import re
 
 from src.ui.theme import COLORS, FONTS, SETTINGS_WIDTH, SETTINGS_HEIGHT
 from src.ui.components import create_card, create_button, create_label, create_separator
@@ -68,19 +70,42 @@ class SettingsWindow(tk.Toplevel):
             fg=COLORS["accent_green"], bg=COLORS["bg_card"], anchor="w"
         ).pack(fill="x", pady=(0, 5))
 
+        # Quick Get-Key assistant banner
+        help_box = tk.Frame(api_inner, bg=COLORS["bg_secondary"], padx=12, pady=10)
+        help_box.pack(fill="x", pady=(0, 10))
+
         tk.Label(
-            api_inner, text=(
-                "Get your free API key at virustotal.com.\n"
-                f"Storage method: {self._credential_storage.storage_method}"
-            ),
-            font=FONTS["body_small"], fg=COLORS["text_muted"],
-            bg=COLORS["bg_card"], anchor="w", justify="left"
-        ).pack(fill="x", pady=(0, 10))
+            help_box,
+            text="Need an API key? It's completely free and takes 30 seconds:",
+            font=FONTS["body_small"],
+            fg=COLORS["text_secondary"],
+            bg=COLORS["bg_secondary"],
+            anchor="w",
+        ).pack(fill="x", pady=(0, 6))
+
+        assistant_row = tk.Frame(help_box, bg=COLORS["bg_secondary"])
+        assistant_row.pack(fill="x", pady=(0, 4))
+
+        get_key_btn = create_button(
+            assistant_row,
+            "⚡ Get Free API Key",
+            lambda: webbrowser.open("https://www.virustotal.com/gui/my-apikey"),
+            style="primary",
+        )
+        get_key_btn.pack(side="left", padx=(0, 10))
+
+        paste_btn = create_button(
+            assistant_row,
+            "📋 Paste from Clipboard",
+            self._paste_from_clipboard,
+            style="secondary",
+        )
+        paste_btn.pack(side="left")
 
         # Status indicator
         has_key = self._credential_storage.has_api_key()
         self._status_frame = tk.Frame(api_inner, bg=COLORS["bg_card"])
-        self._status_frame.pack(fill="x", pady=(0, 10))
+        self._status_frame.pack(fill="x", pady=(8, 10))
 
         self._status_dot = tk.Label(
             self._status_frame,
@@ -99,6 +124,16 @@ class SettingsWindow(tk.Toplevel):
             bg=COLORS["bg_card"],
         )
         self._status_text.pack(side="left")
+
+        # Storage info
+        tk.Label(
+            api_inner,
+            text=f"Protected storage: {self._credential_storage.storage_method}",
+            font=FONTS["body_small"],
+            fg=COLORS["text_muted"],
+            bg=COLORS["bg_card"],
+            anchor="w",
+        ).pack(fill="x", pady=(0, 8))
 
         # API key input
         input_frame = tk.Frame(api_inner, bg=COLORS["bg_card"])
@@ -188,6 +223,25 @@ class SettingsWindow(tk.Toplevel):
 
         close_btn = create_button(close_frame, "Close", self.destroy, style="secondary")
         close_btn.pack(side="right")
+
+    def _paste_from_clipboard(self):
+        """Read API key directly from system clipboard, fill entry, and save."""
+        try:
+            clip = self.clipboard_get().strip()
+            if not clip:
+                self._show_validation("Clipboard is empty.", COLORS["accent_yellow"])
+                return
+            # Clean up copied key
+            clip = clip.strip('\'" \r\n\t')
+            if len(clip) < 32:
+                self._show_validation("Copied text doesn't look like a valid API key.", COLORS["accent_yellow"])
+                return
+            self._api_key_var.set(clip)
+            self._show_validation("📋 Pasted from clipboard! Saving and validating...", COLORS["accent_blue"])
+            self._save_key()
+            self._validate_key()
+        except Exception:
+            self._show_validation("Could not read from clipboard.", COLORS["accent_yellow"])
 
     def _toggle_key_visibility(self):
         """Toggle API key show/hide."""
