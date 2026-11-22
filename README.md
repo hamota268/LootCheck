@@ -24,7 +24,11 @@ Gamers frequently download mods, save editors, trainers, cheats, cracked executa
 ## ✨ Features
 
 - **Gaming-Inspired Dark UI**: Polished charcoal & neon interface designed like a modern utility rather than an outdated enterprise tool.
-- **Drag & Drop Workflow**: Drop files directly from Windows Explorer (`.exe`, `.dll`, `.zip`, `.bat`, `.msi`, `.apk`, etc.) or use the built-in file picker.
+- **Spacious Drag & Drop Landing Pad**: Extra-large, responsive drop zone with generous surface area for dragging files directly from Windows Explorer (`.exe`, `.dll`, `.zip`, `.bat`, `.msi`, `.apk`, `.7z`, `.rar`, `.ps1`, etc.) or one-click file browsing.
+- **⚡ 30-Second Automated Key Setup**:
+  - **1-Click Key Portal**: Click **"⚡ Get Free API Key"** to open the VirusTotal registration/API portal directly in your browser.
+  - **Instant Clipboard Paste**: Click **"📋 Paste from Clipboard"** to automatically sanitize, fill, save, and validate your key against VirusTotal in one single click.
+  - **First-Launch Quick Setup Guide**: Intuitive banner displayed on launch to guide new users without any guesswork.
 - **Genuine VirusTotal API v3**:
   - Immediate local SHA-256 calculation.
   - VirusTotal hash lookup without uploading.
@@ -58,11 +62,13 @@ Gamers frequently download mods, save editors, trainers, cheats, cracked executa
 ## 🚀 Installation & Quick Start
 
 ### Running the Standalone Executable
-1. Download `LootCheck.exe` from the `dist/` folder or releases.
+1. Download `LootCheck.exe` from the `dist/` folder or GitHub Releases.
 2. Double-click `LootCheck.exe` to run. No Python installation or runtime is needed.
-3. Click the **⚙ Settings** button in the top-right corner.
-4. Enter your free **VirusTotal API key** and click **Save API Key** (click **Validate Key** to test connection).
-5. Drag any file into the drop zone and click **SCAN MY FILE**!
+3. **Set up your free key in 30 seconds**:
+   - Click the **⚡ Set Up Free API Key** banner on the main screen (or click **⚙ Settings**).
+   - Click **"⚡ Get Free API Key"** to open VirusTotal and grab your free key.
+   - Click **"📋 Paste from Clipboard"** — LootCheck automatically validates and saves it.
+4. Drag and drop any file into the large drop box and click **SCAN MY FILE**!
 
 ---
 
