@@ -3,6 +3,10 @@
 > **"Check your loot before you run it."**  
 > *Your last checkpoint before malware.*
 
+<p align="center">
+  <img src="assets/images/screenshot.png" alt="LootCheck Interface" width="700"/>
+</p>
+
 **LootCheck** is a dedicated, gamer-focused Windows desktop security utility that gives gamers a simple, intuitive, and visually responsive way to inspect files against VirusTotal before running them on their PC.
 
 ---
