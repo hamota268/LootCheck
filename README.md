@@ -4,8 +4,21 @@
 > *Your last checkpoint before malware.*
 
 <p align="center">
+  <a href="https://github.com/hamota268/LootCheck/releases/latest">
+    <img src="https://img.shields.io/badge/⬇%20DIRECT%20DOWNLOAD-LootCheck.exe%20(Windows)-00FF88?style=for-the-badge&logo=windows&logoColor=0D0D0D" alt="Download LootCheck for Windows"/>
+  </a>
+</p>
+
+<p align="center">
   <img src="assets/images/screenshot.png" alt="LootCheck Interface" width="700"/>
 </p>
+
+### 🎮 Just Want to Scan Files? (No Coding / Python Required)
+> 1. 👉 **[Click Here to Download LootCheck.exe (Latest Release)](https://github.com/hamota268/LootCheck/releases/latest)**
+> 2. Click on **`LootCheck.exe`** under the **Assets** section at the bottom of the release.
+> 3. Double-click the downloaded `.exe` to run it immediately on Windows 10 or 11!
+
+---
 
 **LootCheck** is a dedicated, gamer-focused Windows desktop security utility that gives gamers a simple, intuitive, and visually responsive way to inspect files against VirusTotal before running them on their PC.
 
@@ -59,20 +72,20 @@ Gamers frequently download mods, save editors, trainers, cheats, cracked executa
 
 ---
 
-## 🚀 Installation & Quick Start
+## 🚀 Easy Download & Quick Start
 
-### Running the Standalone Executable
-1. Download `LootCheck.exe` from the `dist/` folder or GitHub Releases.
-2. Double-click `LootCheck.exe` to run. No Python installation or runtime is needed.
-3. **Set up your free key in 30 seconds**:
-   - Click the **⚡ Set Up Free API Key** banner on the main screen (or click **⚙ Settings**).
-   - Click **"⚡ Get Free API Key"** to open VirusTotal and grab your free key.
-   - Click **"📋 Paste from Clipboard"** — LootCheck automatically validates and saves it.
-4. Drag and drop any file into the large drop box and click **SCAN MY FILE**!
+### 📥 For Normal Users (No Python Needed)
+1. Download **`LootCheck.exe`** from the **[Releases Page](https://github.com/hamota268/LootCheck/releases/latest)** (look under the **Assets** dropdown).
+2. Double-click **`LootCheck.exe`** to open it.
+3. **Connect your free key (30 seconds)**:
+   - Click the green **⚡ Set Up Free API Key** banner.
+   - Click **"⚡ Get Free API Key"** to open VirusTotal in your browser.
+   - Click **"📋 Paste from Clipboard"** — LootCheck automatically pastes, validates, and saves it.
+4. **Scan your files**: Drag & drop any `.exe`, `.dll`, `.zip`, `.bat`, or mod into the large box and click **SCAN MY FILE**!
 
 ---
 
-## 🛠️ Development & Building from Source
+## 🛠️ For Developers: Building from Source
 
 ### Prerequisites
 - **Windows 10 or 11** (64-bit recommended)
@@ -80,10 +93,10 @@ Gamers frequently download mods, save editors, trainers, cheats, cracked executa
 - `pip` package manager
 
 ### Setup Instructions
-1. Clone or copy this repository:
+1. Clone this repository:
    ```cmd
-   git clone https://github.com/lootcheck/lootcheck.git
-   cd lootcheck
+   git clone https://github.com/hamota268/LootCheck.git
+   cd LootCheck
    ```
 
 2. Create a virtual environment and activate it:
